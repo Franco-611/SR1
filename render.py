@@ -6,7 +6,7 @@ class Render(object):
         self.width = width
         self.height = height
         self.colorN = color(0 , 0, 0) 
-        self.colorD = color(250 , 250, 250)
+        self.colorD = color(250 , 250, 0)
         self.clear()
 
     def clear(self):
@@ -58,16 +58,16 @@ class Render(object):
         if Empinado:
             x0,y0 = y0,x0
             x1, y1 = y1,x1
-
+ 
         if x0>x1:
             x0,x1 = x1,x0
             y0,y1 = y1,y0
 
-        dy = y1-y0
-        dx = x1-x0
+        dy = abs(y1-y0)
+        dx = abs(x1-x0)
 
         offset = 0 
-        threshold = dx
+        threshold = dx * 2
         y = y0
 
         for x in range (x0,x1):

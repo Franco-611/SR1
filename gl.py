@@ -24,5 +24,6 @@ def glColor(r,g,b):
 def glFinish():
     print('hola')
 
-r = Render(1024, 1024)
+r = Render(100, 100)
+r.line(80,80,20,10)
 r.write('a.bmp')

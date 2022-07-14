@@ -1,7 +1,7 @@
 from WriteUtilities import *
 from color import *
 
-class Render(object):
+class Render:
     def __init__(self, width, height):
         self.width = width
         self.height = height
@@ -18,10 +18,13 @@ class Render(object):
     def write(self, filename):
         f= open(filename, 'bw')
 
+        offset = (4 - (self.width * 3) % 4) % 4
+        new_width = offset + self.width
+
         # pixel header
         f.write(char('B'))
         f.write(char('M'))
-        f.write(dword(14 + 40 + self.width * self.height * 3))
+        f.write(dword(14 + 40 + new_width * self.height * 3))
         f.write(word(0))
         f.write(word(0))
         f.write(dword(14 + 40))
@@ -39,10 +42,12 @@ class Render(object):
         f.write(dword(0))
         f.write(dword(0))
 
+        extra_bytes = [0, 0, 0]
         # pixel data
         for x in range(self.height):
             for y in range(self.width):
                 f.write(self.framebuffer[y][x])
+            f.write(bytes(extra_bytes[0:offset]))
 
         f.close()
 

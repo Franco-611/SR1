@@ -24,7 +24,7 @@ def glColor(r,g,b):
 def glFinish():
     print('hola')
 
-r = Render(100, 100)
+r = Render(1025, 1025)
 r.point(25,70)
 r.point(75,70)
 r.line(80,40,20,40)

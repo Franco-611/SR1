@@ -76,7 +76,8 @@ class Render:
         f.close()
 
     def point(self, x, y):
-        self.framebuffer[x][y]=self.colorD
+        if (x > self.width and x < 0 and y < 0 and y > self.height):
+            self.framebuffer[x][y]=self.colorD
 
     def line(self, x0, y0, x1, y1):
         dy = abs(y1-y0)

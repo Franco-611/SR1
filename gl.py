@@ -11,7 +11,7 @@ def glCreateWindow(w,h):
 
 def glViewPort(x,y,width,height):
     global r 
-    r.viewPort(x,y,width,height)
+    r.viewPort(*r.conversion(x,y),width,height)
 
 def glClear():
     global r 

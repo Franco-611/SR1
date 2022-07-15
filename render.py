@@ -100,23 +100,15 @@ class Render:
         y = y0
 
         for x in range (x0,x1):
+            if Empinado:
+                self.point(y, x)
+            else:
+                self.point(x, y)
+
             offset += dy * 2
 
             if offset >= threshold:
                 y += 1 if y0 < y1 else -1
                 threshold += dx * 2
 
-            if Empinado:
-                self.point(y, x)
-            else:
-                self.point(x, y)
-
-
         
-        #for x in range(x0,x1):
-        #   for y in range(y0,y1):
-        #       if x == y:
-        #           self.point(x,y)
-        
-
-

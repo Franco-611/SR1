@@ -76,7 +76,7 @@ class Render:
         f.close()
 
     def point(self, x, y):
-        if (x > self.width and x < 0 and y < 0 and y > self.height):
+        if not (x > self.width and x < 0 and y < 0 and y > self.height):
             self.framebuffer[x][y]=self.colorD
 
     def line(self, x0, y0, x1, y1):

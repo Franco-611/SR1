@@ -5,9 +5,33 @@ class Render:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.colorN = color(0 , 0, 0) 
+        self.widthV = width
+        self.heightV = height
+        self.x0 = 0
+        self.y0 = 0
+        self.colorN = color(0, 0, 0) 
         self.colorD = color(250 , 250, 0)
         self.clear()
+
+    def viewPort(self, x, y, wid, hei):
+        self.widthV = wid
+        self.heightV = hei
+        self.x0 = x
+        self.y0 = y
+
+
+    def conversion(self, x, y):
+        nuevoX = int (self.x0 + (x+1)* 0.5 * (self.widthV-1))
+        nuevoY = int (self.y0 + (y+1)* 0.5 * (self.heightV-1))
+
+        return(nuevoX, nuevoY)
+
+
+    def ClearColor (self, r, g, b):
+        self.colorN = color(r, g, b)
+
+    def Color (self, r, g, b):
+        self.colorD = color(r, g, b)
 
     def clear(self):
         self.framebuffer= [

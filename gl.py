@@ -1,36 +1,37 @@
 from render import *
 
-def glInit():
-    print('hola')
+r = None
 
-def glCreateWindow(width,height):
-    print('hola')
+def glInit():
+    print('')
+
+def glCreateWindow(w,h):
+    global r 
+    r = Render(w,h)
 
 def glViewPort(x,y,width,height):
-    print('hola')
+    global r 
+    r.viewPort(x,y,width,height)
 
 def glClear():
-    print('hola')
+    global r 
+    r.clear()
 
-def glClearColor(r,g,b):
-    print('hola')
+def glClearColor(rojo,g,b):
+    global r 
+    r.ClearColor(int(rojo*255), int(g*255), int(b*255))
 
 def glVertex(x,y):
-    print('hola')
+    global r 
+    r.point(*r.conversion(x,y))
 
-def glColor(r,g,b):
-    print('hola')
+def glColor(rojo,g,b):
+    global r 
+    r.Color(int(rojo*255), int(g*255), int(b*255))
 
 def glFinish():
-    print('hola')
+    global r 
+    r.write('a.bmp')
 
-r = Render(1025, 1025)
-r.point(25,70)
-r.point(75,70)
-r.line(80,40,20,40)
 
-r.line(79,40,85,50)
 
-r.line(20,40,14,50)
-
-r.write('a.bmp')

@@ -29,6 +29,10 @@ def glColor(rojo,g,b):
     global r 
     r.Color(int(rojo*255), int(g*255), int(b*255))
 
+def glLine(x0, y0, x1, y1):
+    global r 
+    r.line(*r.conversion(x0,y0), *r.conversion(x1,y1))
+
 def glFinish():
     global r 
     r.write('a.bmp')

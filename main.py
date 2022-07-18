@@ -1,7 +1,7 @@
 from gl import *
 
 glInit()
-glCreateWindow(100,100)
+glCreateWindow(500,500)
 glClearColor(0,0,0)
 glClear()
 glColor(1,0,0)
@@ -22,9 +22,14 @@ glLine(0.1,0.4,-0.3,0.6)
 glLine(-0.3,0.6,-0.6,0.3)
 
 #chimenea
-glLine(-0.1,0.52,-0.1,0.62)
-glLine(-0.04,0.46,-0.04,0.60)
+glLine(-0.1,0.50,-0.1,0.61)
+glLine(-0.04,0.47,-0.04,0.60)
 glLine(-0.04,0.60,-0.1,0.61)
+glLine(0.05,0.43,0.05,0.6155)
+glLine(0.05,0.6155,-0.04,0.60)
+glLine(-0.1,0.61,-0.01,0.6195)
+glLine(-0.01,0.6195,0.05,0.6150)
+
 
 
 glFinish()

@@ -1,15 +1,12 @@
 from gl import *
 
 glInit()
-glCreateWindow(100,100)
+glCreateWindow(500,500)
 glClearColor(0,0,0)
-glViewPort(-1, -1, 50, 50)
 glClear()
-<<<<<<< Updated upstream
-glColor(0,1,0)
-glVertex(0,0)
-=======
 glColor(1,0,0)
+
+#Casa
 glLine(-0.6,0.3,-0.3,0)
 glLine(-0.6,0,-0.3,-0.4)
 glLine(-0.6,0.3,-0.6,0)
@@ -35,9 +32,5 @@ glLine(0.05,0.6155,-0.04,0.60)
 glLine(-0.1,0.61,-0.01,0.6195)
 glLine(-0.01,0.6195,0.05,0.6150)
 
-
-
-
->>>>>>> Stashed changes
 glFinish()
 

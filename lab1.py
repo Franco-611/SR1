@@ -30,4 +30,4 @@ glColoreado(quintoP)
 
 
 
-glFinish()
+glFinish('lab1.bmp')

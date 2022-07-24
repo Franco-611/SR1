@@ -83,9 +83,9 @@ def glColoreado(arr):
 
     
 
-def glFinish():
+def glFinish(nombre):
     global r 
-    r.write('a.bmp')
+    r.write(nombre)
 
 
 

@@ -2,6 +2,23 @@ from render import *
 
 r = None
 
+#Funcion obtenida de Wikipedia -- https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule#:~:text=If%20this%20number%20is%20odd,to%20fill%20in%20strange%20ways
+def dentroOno(x: int, y: int, poly) -> bool:
+        num = len(poly)
+        j = num - 1
+        c = False
+        for i in range(num):
+            if (x == poly[i][0]) and (y == poly[i][1]):
+                return True
+            if ((poly[i][1] > y) != (poly[j][1] > y)):
+                slope = (x-poly[i][0])*(poly[j][1]-poly[i][1])-(poly[j][0]-poly[i][0])*(y-poly[i][1])
+                if slope == 0:
+                    return True
+                if (slope < 0) != (poly[j][1] < poly[i][1]):
+                    c = not c
+            j = i
+        return c
+
 def glInit():
     print('')
 
@@ -45,6 +62,26 @@ def glDelineado(arreglo):
     for elements in range(len(arreglo)):
         glPunto(*arreglo[elements%len(arreglo)])
         glLinea(*arreglo[elements%len(arreglo)],*arreglo[(elements+1)%len(arreglo)])
+
+def glColoreado(arr):
+    minX = min([x for x, y in arr])
+    maxX = max([x for x, y in arr])
+    minY = min([y for x, y in arr])
+    maxY = max([y for x, y in arr])
+    
+    # centroX = int((maxX-minX)/2 + minX)
+    # centroY = int((maxY-minY)/2 + minY)
+    # centro = [centroX,centroY]
+
+    for i in range(minX , maxX):
+        for j in range(minY , maxY):
+            if dentroOno(i,j,arr):
+                glPunto(i,j)
+
+
+    
+
+    
 
 def glFinish():
     global r 

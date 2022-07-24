@@ -13,10 +13,21 @@ glClear()
 glColor(1,1,1)
 
 glDelineado(primerP)
+glColoreado(primerP)
 glDelineado(segundoP)
+glColoreado(segundoP)
 glDelineado(tercerP)
+glColoreado(tercerP)
 glDelineado(cuartoP)
+glColoreado(cuartoP)
 glDelineado(quintoP)
+glColor(0,0,0)
+glColoreado(quintoP)
+
+
+
+
+
 
 
 glFinish()

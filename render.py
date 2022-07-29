@@ -1,5 +1,6 @@
 from WriteUtilities import *
 from color import *
+from Obj import *
 
 class Render:
     def __init__(self, width, height):
@@ -19,13 +20,11 @@ class Render:
         self.x0 = x
         self.y0 = y
 
-
     def conversion(self, x, y):
         nuevoX = int (self.x0 + (x+1)* 0.5 * (self.widthV-1))
         nuevoY = int (self.y0 + (y+1)* 0.5 * (self.heightV-1))
 
         return(nuevoX, nuevoY)
-
 
     def ClearColor (self, r, g, b):
         self.colorN = color(r, g, b)
@@ -100,7 +99,7 @@ class Render:
         threshold = dx * 2
         y = y0
 
-        for x in range (x0,x1):
+        for x in range (x0,x1+1):
             if Empinado:
                 self.point(y, x)
             else:
@@ -112,4 +111,28 @@ class Render:
                 y += 1 if y0 < y1 else -1
                 threshold += dx * 2
 
-        
+    def transformar(self, punto, escala, tras):
+        result = [
+            int(punto[0] * escala[0] + tras[0]),
+            int(punto[1] * escala[1] + tras[1])
+        ]
+        return result
+
+    def diseno3D(self, objeto, escala, traslacion):
+        obje = Obj(objeto)
+        for i in obje.caras:
+            for x in range(len(i)):
+                vert1 = i[x][0] - 1
+                vert2 = i[(x+1)%len(i)][0] - 1
+
+                punt1= self.transformar(obje.vertices[vert1], escala, traslacion)
+
+                punt2= self.transformar(obje.vertices[vert2], escala, traslacion)
+
+                self.line(punt1[0],punt1[1],punt2[0],punt2[1])
+
+
+
+
+
+

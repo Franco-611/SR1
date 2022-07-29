@@ -78,14 +78,14 @@ def glColoreado(arr):
             if dentroOno(i,j,arr):
                 glPunto(i,j)
 
-
-    
-
-    
+def glObjeto3D(objeto,escala, traslacion):
+    global r 
+    r.diseno3D(objeto,escala,traslacion)
 
 def glFinish(nombre):
     global r 
     r.write(nombre)
+
 
 
 

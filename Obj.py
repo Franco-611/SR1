@@ -10,6 +10,8 @@ class Obj(object):
             
             prefix, value = line.split(' ', 1)
 
+
+
             if prefix == 'v':
                 self.vertices.append(
                     list(

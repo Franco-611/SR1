@@ -1,3 +1,6 @@
+from numpy import size
+
+
 class Obj(object):
     def __init__(self, filename):
         with open(filename) as f:
@@ -7,19 +10,26 @@ class Obj(object):
         self.caras = []
 
         for line in self.lines:
-            
-            prefix, value = line.split(' ', 1)
+            if len(line.split(' ', 1))>1:
+
+                prefix, value = line.split(' ', 1)
 
 
 
-            if prefix == 'v':
-                self.vertices.append(
-                    list(
-                        map(float, value.split(' '))
+                if prefix == 'v':
+                    self.vertices.append(
+                        list(
+                            map(float, value.split(' '))
+                        )
                     )
-                )
-            if prefix == 'f':
-                self.caras.append([
-                    list(map(int, face.split('/')))
-                        for face in value.split(' ')
-                ]) 
+                if prefix == 'f':
+                    self.caras.append([
+                        list(
+                            map(self.prueba, face.split('/')))
+                                for face in value.split(' ')])
+
+    def prueba(self, n):
+        if n == '':
+            return 0
+        else:
+            return int(n)

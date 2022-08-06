@@ -1,4 +1,7 @@
+from re import U
+from sympy import Max
 from render import *
+from vector import *
 
 r = None
 
@@ -81,6 +84,14 @@ def glColoreado(arr):
 def glObjeto3D(objeto,escala, traslacion):
     global r 
     r.diseno3D(objeto,escala,traslacion)
+
+def glTringulo(A,B,C):
+    global r
+    r.tringulo(A,B,C)
+
+def glZbuffer(nombre):
+    global r 
+    r.writeZ(nombre)
 
 def glFinish(nombre):
     global r 

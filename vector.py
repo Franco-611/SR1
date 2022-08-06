@@ -42,5 +42,12 @@ class V3(object):
     def norm(self):
         return self * (1/self.magnitud())
 
+    def cross(v1,v2):
+        return(
+            v1.y * v2.z - v1.z * v2.y,
+            v1.z * v2.x - v1.x * v2.z,
+            v1.x * v2.y - v1.y * v2.x
+        )
+
     def __repr__(self):
         return "V3(%s, %s, %s)" % (self.x, self.y, self.z)

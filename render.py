@@ -47,7 +47,7 @@ class Render:
             for y in range(self.height)
         ]
 
-    def write(self, filename):
+    def write(self, filename="pruebass.bmp"):
         f= open(filename, 'bw')
 
         offset = (4 - (self.width * 3) % 4) % 4
@@ -76,8 +76,8 @@ class Render:
 
         extra_bytes = [0, 0, 0]
         # pixel data
-        for x in range(self.height):
-            for y in range(self.width):
+        for y in range(self.height):
+            for x in range(self.width):
                 f.write(self.framebuffer[y][x])
             f.write(bytes(extra_bytes[0:offset]))
 
@@ -115,9 +115,9 @@ class Render:
 
         for x in range (x0,x1+1):
             if Empinado:
-                self.point(y, x)
-            else:
                 self.point(x, y)
+            else:
+                self.point(y, x)
 
             offset += dy * 2
 
@@ -233,6 +233,11 @@ class Render:
                     self.zbuffer[x][y] = z
                     self. sobrabuffer[x][y] = color(round(255*f), round(255*f), round(255*f))
                     self.point(x,y)
+
+    def triangulo(self, v1, v2, v3):
+        self.line(v1,v2)
+        self.line(v2,v3)
+        self.line(v3,v1)
 
     def writeZ(self, filename):
         f= open(filename, 'bw')

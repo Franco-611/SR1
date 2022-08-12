@@ -7,6 +7,8 @@ class Obj(object):
             self.lines = f.read().splitlines()
 
         self.vertices = []
+        self.tvertices = []
+        self.nvertices = []
         self.caras = []
 
         for line in self.lines:
@@ -18,6 +20,18 @@ class Obj(object):
 
                 if prefix == 'v':
                     self.vertices.append(
+                        list(
+                            map(float, value.split(' '))
+                        )
+                    )
+                if prefix == 'vt':
+                    self.tvertices.append(
+                        list(
+                            map(float, value.split(' '))
+                        )
+                    )
+                if prefix == 'vn':
+                    self.nvertices.append(
                         list(
                             map(float, value.split(' '))
                         )

@@ -1,8 +1,8 @@
 class V3(object):
     def __init__(self,x,y, z=0):
-        self.x = int(x)
-        self.y = int(y)
-        self.z = int(z)
+        self.x = x
+        self.y = y
+        self.z = z
 
     def __add__(self, other):
         return V3(

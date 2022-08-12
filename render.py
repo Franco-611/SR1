@@ -76,8 +76,8 @@ class Render:
 
         extra_bytes = [0, 0, 0]
         # pixel data
-        for y in range(self.height):
-            for x in range(self.width):
+        for x in range(self.height):
+            for y in range(self.width):
                 f.write(self.framebuffer[y][x])
             f.write(bytes(extra_bytes[0:offset]))
 

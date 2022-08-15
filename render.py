@@ -2,6 +2,7 @@ from WriteUtilities import *
 from color import *
 from Obj import *
 from vector import *
+from textures import *
 
 class Render:
     def __init__(self, width, height):
@@ -13,6 +14,7 @@ class Render:
         self.y0 = 0
         self.colorN = color(0, 0, 0) 
         self.colorD = color(250 , 250, 0)
+        self.texture = None
         self.clear()
 
     def viewPort(self, x, y, wid, hei):
@@ -76,8 +78,8 @@ class Render:
 
         extra_bytes = [0, 0, 0]
         # pixel data
-        for x in range(self.height):
-            for y in range(self.width):
+        for y in range(self.height):
+            for x in range(self.width):
                 f.write(self.framebuffer[y][x])
             f.write(bytes(extra_bytes[0:offset]))
 
@@ -88,10 +90,10 @@ class Render:
             self.framebuffer[x][y]=self.colorD
 
     def line(self, v1,v2):
-        x0= v1.x 
-        y0= v1.y
-        x1= v2.x
-        y1= v2.y
+        x0= round(v1.x) 
+        y0= round(v1.y)
+        x1= round(v2.x)
+        y1= round(v2.y)
 
         dy = abs(y1-y0)
         dx = abs(x1-x0)
@@ -147,8 +149,8 @@ class Render:
                 v3 = self.transformar(obje.vertices[f3], escala, traslacion)
                 v4 = self.transformar(obje.vertices[f4], escala, traslacion)
 
-                self.tringulo(v1, v2, v3)
-                self.tringulo(v1, v3, v4)
+                self.tringulo((v1, v2, v3))
+                self.tringulo((v1, v3, v4))
 
             elif len(i) == 3:
                 f1 = i[0][0] - 1
@@ -158,23 +160,23 @@ class Render:
                 v1 = self.transformar(obje.vertices[f1], escala, traslacion)
                 v2 = self.transformar(obje.vertices[f2], escala, traslacion)
                 v3 = self.transformar(obje.vertices[f3], escala, traslacion)
+                
+                if self.texture:
 
-                self.tringulo(v1, v2, v3)
+                    ft1 = i[0][1] - 1
+                    ft2 = i[1][1] - 1
+                    ft3 = i[2][1] - 1
 
-            '''
-            for x in range(len(i)):
+                    vt1 =  V3(*obje.tvertices[ft1])
+                    vt2 =  V3(*obje.tvertices[ft2])
+                    vt3 =  V3(*obje.tvertices[ft3])
 
+                    
 
-                vert1 = i[x][0] - 1
-                vert2 = i[(x+1)%len(i)][0] - 1
+                    self.tringulo((v1, v2, v3) , (vt1, vt2, vt3)) 
 
-                punt1= self.transformar(obje.vertices[vert1], escala, traslacion)
-
-                punt2= self.transformar(obje.vertices[vert2], escala, traslacion)
-
-                self.line(punt1[0],punt1[1],punt2[0],punt2[1])
-
-            '''
+                else:
+                    self.tringulo((v1, v2, v3))
 
     def barycentric(self,A, B, C, P):
         cx, cy, cz = self.cross(
@@ -207,7 +209,13 @@ class Render:
             ys.sort()
             return V3(xs[0],ys[0]),V3(xs[-1],ys[-1])
 
-    def tringulo(self,A,B,C):
+    def tringulo(self,vertices, tvertices ):
+        A, B, C = vertices
+
+        if self.texture:
+            tA, tB, tC = tvertices
+        
+
         l = V3(0,0,-1)
         n = (C-A) * (B-A)
         i = n.norm() @ l.norm()
@@ -232,13 +240,15 @@ class Render:
                 if self.zbuffer[x][y] < z:
                     self.zbuffer[x][y] = z
                     self. sobrabuffer[x][y] = color(round(255*f), round(255*f), round(255*f))
-                    self.point(x,y)
 
-    def triangulo(self, v1, v2, v3):
-        self.line(v1,v2)
-        self.line(v2,v3)
-        self.line(v3,v1)
+                    if self.texture:
+                        tx = tA.x * w + tB.x * u + tC.x * v
+                        ty = tA.y * w + tB.y * u + tC.y * v
 
+                        self.colorD = self.texture.get_color_with_intensity(tx, ty, i)
+
+                    self.point(y,x)  
+ 
     def writeZ(self, filename):
         f= open(filename, 'bw')
 

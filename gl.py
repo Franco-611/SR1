@@ -89,6 +89,10 @@ def glTringulo(A,B,C):
     global r
     r.tringulo(A,B,C)
 
+def glTexture(texture):
+    global r
+    r.texture = texture
+
 def glZbuffer(nombre):
     global r 
     r.writeZ(nombre)

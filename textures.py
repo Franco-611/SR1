@@ -1,6 +1,6 @@
 import struct
 from color import *
-from render import *
+from vector import *
 
 class Textures:
     def __init__(self, path):
@@ -22,7 +22,6 @@ class Textures:
                 self.pixels.append([])
                 for x in range(self.width):
                     b = ord(image.read(1))
-
                     g = ord(image.read(1))
                     r = ord(image.read(1))
                     self.pixels[y].append(
@@ -39,36 +38,46 @@ class Textures:
         x = round(tx * self.width)
         y = round(ty * self.height)
 
-        b = self.pixels[y][x][0] * intensity
-        g = self.pixels[y][x][1] * intensity
-        r = self.pixels[y][x][2] * intensity
+        b = round(self.pixels[y][x][0] * intensity)
+        g = round(self.pixels[y][x][1] * intensity)
+        r = round(self.pixels[y][x][2] * intensity)
 
         return color(r, g, b)
 
-r = Render(250,250)
-t = Textures("model.bmp")
-r.width=t.width
-r.height= t.height
-r.framebuffer=t.pixels
-r.write()
+def sobre_textura(figura, r, t):
 
-figura = Obj("cara.obj")
-w=[t.width,t.height,0]
-e=[0,0,0]
-r.Color(1,0,0)
+    w=[t.width,t.height,0]
+    e=[0,0,0]
+    r.Color(1,0,0)
+
+    for face in figura.caras:
+
+        f1 = face[0][1] - 1
+        f2 = face[1][1] - 1
+        f3 = face[2][1] - 1
+
+        v1 = V3(
+            figura.tvertices[f1][0] * t.width,
+            figura.tvertices[f1][1] * t.height
+        )
+
+        v2 = V3(
+            figura.tvertices[f2][0] * t.width,
+            figura.tvertices[f2][1] * t.height
+        )
+
+        v3 = V3(
+            figura.tvertices[f3][0] * t.width,
+            figura.tvertices[f3][1] * t.height
+        )
+
+        r.line(v1,v2)
+        r.line(v2,v3)
+        r.line(v3,v1)
+            
+    r.write()
 
 
-for face in figura.caras:
-    
-    f1 = face[0][1] - 1
-    f2 = face[1][1] - 1
-    f3 = face[2][1] - 1
 
-    v1 = r.transformar(figura.tvertices[f1],w,e)
-    v2 = r.transformar(figura.tvertices[f2],w,e)
-    v3 = r.transformar(figura.tvertices[f3],w,e)
 
-    r.triangulo(v1,v2,v3)
-        
-r.write()
 

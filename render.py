@@ -209,7 +209,7 @@ class Render:
             ys.sort()
             return V3(xs[0],ys[0]),V3(xs[-1],ys[-1])
 
-    def tringulo(self,vertices, tvertices ):
+    def tringulo(self,vertices, tvertices=None):
         A, B, C = vertices
 
         if self.texture:

@@ -52,28 +52,59 @@ def sobre_textura(figura, r, t):
 
     for face in figura.caras:
 
-        f1 = face[0][1] - 1
-        f2 = face[1][1] - 1
-        f3 = face[2][1] - 1
+        if len(face) == 4:
+            f1 = face[0][0] - 1
+            f2 = face[1][0] - 1
+            f3 = face[2][0] - 1
+            f4 = face[3][0] - 1
 
-        v1 = V3(
-            figura.tvertices[f1][0] * t.width,
-            figura.tvertices[f1][1] * t.height
-        )
+            v1 = V3(
+                figura.tvertices[f1][0] * t.width,
+                figura.tvertices[f1][1] * t.height
+            )
 
-        v2 = V3(
-            figura.tvertices[f2][0] * t.width,
-            figura.tvertices[f2][1] * t.height
-        )
+            v2 = V3(
+                figura.tvertices[f2][0] * t.width,
+                figura.tvertices[f2][1] * t.height
+            )
 
-        v3 = V3(
-            figura.tvertices[f3][0] * t.width,
-            figura.tvertices[f3][1] * t.height
-        )
+            v3 = V3(
+                figura.tvertices[f3][0] * t.width,
+                figura.tvertices[f3][1] * t.height
+            )
+            v4 = V3(
+                figura.tvertices[f4][0] * t.width,
+                figura.tvertices[f4][1] * t.height
+            )
+            r.line(v1,v2)
+            r.line(v2,v3)
+            r.line(v3,v4)
+            r.line(v4,v1)
 
-        r.line(v1,v2)
-        r.line(v2,v3)
-        r.line(v3,v1)
+
+
+        elif len(face) == 3:
+            f1 = face[0][1] - 1
+            f2 = face[1][1] - 1
+            f3 = face[2][1] - 1
+
+            v1 = V3(
+                figura.tvertices[f1][0] * t.width,
+                figura.tvertices[f1][1] * t.height
+            )
+
+            v2 = V3(
+                figura.tvertices[f2][0] * t.width,
+                figura.tvertices[f2][1] * t.height
+            )
+
+            v3 = V3(
+                figura.tvertices[f3][0] * t.width,
+                figura.tvertices[f3][1] * t.height
+            )
+            r.line(v1,v2)
+            r.line(v2,v3)
+            r.line(v3,v1)
             
     r.write()
 

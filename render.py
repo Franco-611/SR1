@@ -149,8 +149,23 @@ class Render:
                 v3 = self.transformar(obje.vertices[f3], escala, traslacion)
                 v4 = self.transformar(obje.vertices[f4], escala, traslacion)
 
-                self.tringulo((v1, v2, v3))
-                self.tringulo((v1, v3, v4))
+                if self.texture:
+                    ft1 = i[0][1] - 1
+                    ft2 = i[1][1] - 1
+                    ft3 = i[2][1] - 1
+                    ft4 = i[3][1] - 1
+
+                    vt1 = V3(*obje.tvertices[ft1])
+                    vt2 = V3(*obje.tvertices[ft2])
+                    vt3 = V3(*obje.tvertices[ft3])
+                    vt4 = V3(*obje.tvertices[ft4])
+
+                    self.tringulo((v1, v2, v3), (vt1, vt2, vt3))
+                    self.tringulo((v1, v3, v4), (vt1, vt3, vt4))
+
+                else:
+                    self.tringulo((v1, v2, v3), None)
+                    self.tringulo((v1, v3, v4), None)
 
             elif len(i) == 3:
                 f1 = i[0][0] - 1
@@ -176,7 +191,7 @@ class Render:
                     self.tringulo((v1, v2, v3) , (vt1, vt2, vt3)) 
 
                 else:
-                    self.tringulo((v1, v2, v3))
+                    self.tringulo((v1, v2, v3), None)
 
     def barycentric(self,A, B, C, P):
         cx, cy, cz = self.cross(
@@ -209,7 +224,7 @@ class Render:
             ys.sort()
             return V3(xs[0],ys[0]),V3(xs[-1],ys[-1])
 
-    def tringulo(self,vertices, tvertices=None):
+    def tringulo(self,vertices, tvertices):
         A, B, C = vertices
 
         if self.texture:
@@ -239,7 +254,7 @@ class Render:
                 
                 if self.zbuffer[x][y] < z:
                     self.zbuffer[x][y] = z
-                    self. sobrabuffer[x][y] = color(round(255*f), round(255*f), round(255*f))
+                    #self. sobrabuffer[x][y] = color(round(255*f), round(255*f), round(255*f))
 
                     if self.texture:
                         tx = tA.x * w + tB.x * u + tC.x * v

@@ -53,10 +53,10 @@ def sobre_textura(figura, r, t):
     for face in figura.caras:
 
         if len(face) == 4:
-            f1 = face[0][0] - 1
-            f2 = face[1][0] - 1
-            f3 = face[2][0] - 1
-            f4 = face[3][0] - 1
+            f1 = face[0][1] - 1
+            f2 = face[1][1] - 1
+            f3 = face[2][1] - 1
+            f4 = face[3][1] - 1
 
             v1 = V3(
                 figura.tvertices[f1][0] * t.width,

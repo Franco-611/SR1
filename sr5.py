@@ -11,7 +11,6 @@ glColor(1,1,0)
 t = Textures("model.bmp")
 glTexture(t)
 glObjeto3D('cara.obj', (800,800,800),(1000,1000,600))
-#glObjeto3D('alerta.obj', (250,250,250),(1000,400,1000))
 #glObjeto3D('tierra.obj', (1.5,1.5,1),(1000,1000,1000))
 glFinish('pruebas.bmp')
 

@@ -86,8 +86,8 @@ class Render:
         f.close()
 
     def point(self, x, y):
-        if not (x > self.width and x < 0 and y < 0 and y > self.height):
-            self.framebuffer[x][y]=self.colorD
+        if not (x >= self.width and x < 0 and y < 0 and y >= self.height):
+            self.framebuffer[x-1][y-1]=self.colorD
 
     def line(self, v1,v2):
         x0= round(v1.x) 
@@ -182,10 +182,11 @@ class Render:
                     ft2 = i[1][1] - 1
                     ft3 = i[2][1] - 1
 
+
                     vt1 =  V3(*obje.tvertices[ft1])
                     vt2 =  V3(*obje.tvertices[ft2])
                     vt3 =  V3(*obje.tvertices[ft3])
-
+                    
                     
 
                     self.tringulo((v1, v2, v3) , (vt1, vt2, vt3)) 

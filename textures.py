@@ -46,10 +46,6 @@ class Textures:
 
 def sobre_textura(figura, r, t):
 
-    w=[t.width,t.height,0]
-    e=[0,0,0]
-    r.Color(1,0,0)
-
     for face in figura.caras:
 
         if len(face) == 4:

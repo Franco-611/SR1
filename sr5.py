@@ -11,9 +11,9 @@ glColor(1,1,0)
 t = Textures("cofre.bmp")
 glTexture(t)
 #glObjeto3D('cara.obj', (800,800,800),(1000,1000,600))
-glObjeto3D('cofre.obj', (800,800,800),(1000,1000,600))
+glObjeto3D('cofre.obj', (850,850,800),(1000,900,600))
 #glObjeto3D('tierra.obj', (1.5,1.5,1),(1000,1000,1000))
-glFinish('pruebas.bmp')
+glFinish('sr5.bmp')
 
 '''
 r = Render(4096,4096)

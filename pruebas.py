@@ -7,6 +7,19 @@ hola = MAT([
 ]
 )
 
+hola1 = MAT([
+    [1,2],
+    [3,4],
+    [5,6]
+]
+)
+
+pez1 = MAT([
+    [1,2,3],
+    [4,5,6]
+]
+)
+
 pez = MAT([
     [1,2,3],
     [1,1,1],
@@ -14,4 +27,4 @@ pez = MAT([
 ]
 )
 
-print(pez-hola, pez.mat)
+print(pez*hola)

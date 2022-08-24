@@ -15,6 +15,8 @@ class Render:
         self.colorN = color(0, 0, 0) 
         self.colorD = color(250 , 250, 0)
         self.texture = None
+        self.arregloTringulo=[]
+        self.luz=V3(0,0,-1)
         self.clear()
 
     def viewPort(self, x, y, wid, hei):
@@ -149,6 +151,7 @@ class Render:
                 v3 = self.transformar(obje.vertices[f3], escala, traslacion)
                 v4 = self.transformar(obje.vertices[f4], escala, traslacion)
 
+
                 if self.texture:
                     ft1 = i[0][1] - 1
                     ft2 = i[1][1] - 1
@@ -160,12 +163,30 @@ class Render:
                     vt3 = V3(*obje.tvertices[ft3])
                     vt4 = V3(*obje.tvertices[ft4])
 
-                    self.tringulo((v1, v2, v3), (vt1, vt2, vt3))
-                    self.tringulo((v1, v3, v4), (vt1, vt3, vt4))
+                
+                    self.arregloTringulo.append(v1)
+                    self.arregloTringulo.append(v2)
+                    self.arregloTringulo.append(v3)
+                    self.arregloTringulo.append(vt1)
+                    self.arregloTringulo.append(vt2)
+                    self.arregloTringulo.append(vt3)
+
+                    self.arregloTringulo.append(v1)
+                    self.arregloTringulo.append(v3)
+                    self.arregloTringulo.append(v4)
+                    self.arregloTringulo.append(vt1)
+                    self.arregloTringulo.append(vt3)
+                    self.arregloTringulo.append(vt4)
 
                 else:
-                    self.tringulo((v1, v2, v3), None)
-                    self.tringulo((v1, v3, v4), None)
+                    self.arregloTringulo.append(v1)
+                    self.arregloTringulo.append(v2)
+                    self.arregloTringulo.append(v3)
+
+                    self.arregloTringulo.append(v1)
+                    self.arregloTringulo.append(v3)
+                    self.arregloTringulo.append(v4)
+                    
 
             elif len(i) == 3:
                 f1 = i[0][0] - 1
@@ -188,12 +209,20 @@ class Render:
                     vt3 =  V3(*obje.tvertices[ft3])
                     
                     
-
-                    self.tringulo((v1, v2, v3) , (vt1, vt2, vt3)) 
+                    self.arregloTringulo.append(v1)
+                    self.arregloTringulo.append(v2)
+                    self.arregloTringulo.append(v3)
+                    self.arregloTringulo.append(vt1)
+                    self.arregloTringulo.append(vt2)
+                    self.arregloTringulo.append(vt3)
 
                 else:
-                    self.tringulo((v1, v2, v3), None)
+                    self.arregloTringulo.append(v1)
+                    self.arregloTringulo.append(v2)
+                    self.arregloTringulo.append(v3)
 
+        self.dibujar()
+                    
     def barycentric(self,A, B, C, P):
         cx, cy, cz = self.cross(
             V3(B.x - A.x, C.x - A.x, A.x - P.x),
@@ -210,6 +239,16 @@ class Render:
         w = 1 - (cx + cy)/cz
         return (w, v, u)
 
+    def dibujar(self):
+        
+        self.arregloTringulo = iter(self.arregloTringulo)
+
+        try:
+            while(True):
+                self.tringulo()
+        except:
+            StopIteration
+
     def cross(self,v1,v2):
         return(
             v1.y * v2.z - v1.z * v2.y,
@@ -225,14 +264,18 @@ class Render:
             ys.sort()
             return V3(xs[0],ys[0]),V3(xs[-1],ys[-1])
 
-    def tringulo(self,vertices, tvertices):
-        A, B, C = vertices
+    def tringulo(self):
+        A = next(self.arregloTringulo)
+        B = next(self.arregloTringulo)
+        C = next(self.arregloTringulo)
 
         if self.texture:
-            tA, tB, tC = tvertices
+            tA = next(self.arregloTringulo)
+            tB = next(self.arregloTringulo)
+            tC = next(self.arregloTringulo)
         
 
-        l = V3(0,0,-1)
+        l = self.luz
         n = (C-A) * (B-A)
         i = n.norm() @ l.norm()
 

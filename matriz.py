@@ -41,7 +41,7 @@ class MAT(object):
                     total += self.mat[x][f] * other.mat[f][y]
                 temp[x][y]+= total
 
-        return temp
+        return MAT(temp)
 
     
 

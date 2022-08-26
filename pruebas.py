@@ -1,5 +1,9 @@
 from matriz import *
 
+chupi = MAT([
+    [1,2,3]
+    ])
+
 hola = MAT([
     [1,1,1],
     [1,1,1],
@@ -22,9 +26,9 @@ pez1 = MAT([
 
 pez = MAT([
     [1,2,3],
-    [1,1,1],
-    [1,1,1]
+    [4,5,6],
+    [7,8,9]
 ]
 )
 
-print(pez*hola)
+print((hola1*pez1).mat)

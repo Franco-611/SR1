@@ -1,3 +1,4 @@
+from matriz import *
 class V3(object):
     def __init__(self,x,y, z=0):
         self.x = x
@@ -48,6 +49,9 @@ class V3(object):
             v1.z * v2.x - v1.x * v2.z,
             v1.x * v2.y - v1.y * v2.x
         )
+
+    def aMat(self):
+        return MAT([self.x, self.y, self.z])
 
     def __repr__(self):
         return "V3(%s, %s, %s)" % (self.x, self.y, self.z)

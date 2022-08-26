@@ -1,8 +1,11 @@
+from tkinter import Y
 from WriteUtilities import *
 from color import *
 from Obj import *
 from vector import *
 from textures import *
+from matriz import *
+from math import *
 
 class Render:
     def __init__(self, width, height):
@@ -17,7 +20,90 @@ class Render:
         self.texture = None
         self.arregloTringulo=[]
         self.luz=V3(0,0,-1)
+        self.Model = None
+        self.View = None
         self.clear()
+
+    def loadModelMatrix(self, translate=(0,0,0), scale=(1,1,1), rotate=(0,0,0)):
+        translate = V3(*translate)
+        rotate = V3(*rotate)
+        scale = V3(*scale)
+
+        translate_matrix = MAT([
+            [1,0,0,translate.x],
+            [0,1,0,translate.y],
+            [0,0,1,translate.z],
+            [0,0,0,1]
+        ]
+        )
+
+        scale_matrix = MAT([
+            [scale.x,0,0,0],
+            [0,scale.y,0,0],
+            [0,0,scale.z,0],
+            [0,0,0,1]
+        ]
+        )
+
+        a = rotate.x
+        rotacionX = MAT([
+            [1,0,0,0],
+            [0,cos(a),-sin(a),0],
+            [0,sin(a),cos(a),1],
+            [0,0,0,1]
+        ]
+        )
+
+        b = rotate.y
+        rotacionY = MAT([
+            [cos(b),0,sin(b),0],
+            [0,1,0,0],
+            [-sin(b),0,cos(b),0],
+            [0,0,0,1]
+        ]
+        )
+
+        c = rotate.z
+        rotacionZ = MAT([
+            [cos(c),-sin(c),0,0],
+            [sin(c),cos(c),0,0],
+            [0,0,1,0],
+            [0,0,0,1]
+        ]
+        )
+
+        rot = rotacionX *  rotacionY * rotacionZ
+
+        self.Model = translate_matrix * rot * scale_matrix 
+
+    def loadViewMatrix(self, x, y, z, center):
+        Mi = MAT([
+            [x.x, x.y, x.z, 0],
+            [y.x, y.y, y.z, 0],
+            [z.x, z.y, z.z, 0], 
+            [0,0,0,1]
+
+        ])
+
+        O = MAT([
+            [1, 0, 0, -center.x],
+            [0, 1, 0, -center.y],
+            [0, 0, 1, -center.z],
+            [0, 0, 0,         1]
+        ])
+
+        self.View = Mi * O
+
+    def lookAt(self, eye, center, up):
+        eye = V3(*eye)
+        center = V3(*center)
+        up = V3(*up)
+
+        z = (eye-center).norm()
+        x = (up * z).norm()
+        y = (z * x).norm()
+
+        self.loadViewMatrix(x,y,z, center)
 
     def viewPort(self, x, y, wid, hei):
         self.widthV = wid
@@ -129,15 +215,26 @@ class Render:
                 y += 1 if y0 < y1 else -1
                 threshold += dx * 2
 
-    def transformar(self, punto, escala, tras):
+    def transformar(self, vertex):
+        augmented_vertex = MAT([
+            [vertex[0]],
+            [vertex[1]],
+            [vertex[2]],
+            [1]
+        ]
+        )
+        transforVertex = self.Model * augmented_vertex * self.View 
+        transforVertex = transforVertex.mat
+
         result = V3(
-            (punto[0] * escala[0] + tras[0]),
-            (punto[1] * escala[1] + tras[1]),
-            (punto[2] * escala[2] + tras[2])
+            transforVertex[0][0] / transforVertex[3][0],
+            transforVertex[1][0] / transforVertex[3][0],
+            transforVertex[2][0] / transforVertex[3][0],
         )
         return result
 
-    def diseno3D(self, objeto, escala, traslacion):
+    def diseno3D(self, objeto, escala, traslacion, rotacion = (0, 0, 0)):
+        self.loadModelMatrix(traslacion, escala, rotacion)
         obje = Obj(objeto)
         for i in obje.caras:
             if len(i) == 4:
@@ -146,10 +243,10 @@ class Render:
                 f3 = i[2][0] - 1
                 f4 = i[3][0] - 1
 
-                v1 = self.transformar(obje.vertices[f1], escala, traslacion)
-                v2 = self.transformar(obje.vertices[f2], escala, traslacion)
-                v3 = self.transformar(obje.vertices[f3], escala, traslacion)
-                v4 = self.transformar(obje.vertices[f4], escala, traslacion)
+                v1 = self.transformar(obje.vertices[f1])
+                v2 = self.transformar(obje.vertices[f2])
+                v3 = self.transformar(obje.vertices[f3])
+                v4 = self.transformar(obje.vertices[f4])
 
 
                 if self.texture:
@@ -193,9 +290,9 @@ class Render:
                 f2 = i[1][0] - 1
                 f3 = i[2][0] - 1
 
-                v1 = self.transformar(obje.vertices[f1], escala, traslacion)
-                v2 = self.transformar(obje.vertices[f2], escala, traslacion)
-                v3 = self.transformar(obje.vertices[f3], escala, traslacion)
+                v1 = self.transformar(obje.vertices[f1])
+                v2 = self.transformar(obje.vertices[f2])
+                v3 = self.transformar(obje.vertices[f3])
                 
                 if self.texture:
 

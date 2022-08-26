@@ -81,9 +81,9 @@ def glColoreado(arr):
             if dentroOno(i,j,arr):
                 glPunto(i,j)
 
-def glObjeto3D(objeto,escala, traslacion):
+def glObjeto3D(objeto,escala, traslacion, rotacion=(0,0,0)):
     global r 
-    r.diseno3D(objeto,escala,traslacion)
+    r.diseno3D(objeto,escala,traslacion, rotacion)
 
 def glTringulo(A,B,C):
     global r
@@ -96,6 +96,10 @@ def glTexture(texture):
 def glZbuffer(nombre):
     global r 
     r.writeZ(nombre)
+
+def glLook(eye, center, up):
+    global r 
+    r.lookAt(eye, center, up)
 
 def glFinish(nombre):
     global r 

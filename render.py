@@ -223,7 +223,7 @@ class Render:
             [1]
         ]
         )
-        transforVertex = self.Model * augmented_vertex * self.View 
+        transforVertex = self.Model * self.View * augmented_vertex  
         transforVertex = transforVertex.mat
 
         result = V3(

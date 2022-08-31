@@ -22,6 +22,8 @@ class Render:
         self.luz=V3(0,0,-1)
         self.Model = None
         self.View = None
+        self.Proy = None
+        self.ViewPort = None
         self.clear()
 
     def loadModelMatrix(self, translate=(0,0,0), scale=(1,1,1), rotate=(0,0,0)):
@@ -94,6 +96,29 @@ class Render:
 
         self.View = Mi * O
 
+    def loadProjection(self):
+
+        self.Proy = MAT([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, -0.001, 1]
+        ])
+
+    def loadViewport(self):
+        x=self.x0
+        y=self.y0
+        w= self.widthV/2
+        h= self.heightV/2
+
+
+        self.ViewPort = MAT([
+            [w, 0, 0, x+w],
+            [0, h, 0, y+h],
+            [0, 0, 128, 128],
+            [0, 0, 0, 1]
+        ])
+
     def lookAt(self, eye, center, up):
         eye = V3(*eye)
         center = V3(*center)
@@ -104,6 +129,8 @@ class Render:
         y = (z * x).norm()
 
         self.loadViewMatrix(x,y,z, center)
+        self.loadProjection()
+        self.loadViewport()
 
     def viewPort(self, x, y, wid, hei):
         self.widthV = wid
@@ -223,7 +250,7 @@ class Render:
             [1]
         ]
         )
-        transforVertex = self.Model * self.View * augmented_vertex  
+        transforVertex = self.ViewPort * self.Proy * self.View * self.Model  * augmented_vertex  
         transforVertex = transforVertex.mat
 
         result = V3(

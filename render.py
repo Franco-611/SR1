@@ -538,7 +538,7 @@ class Render:
             tx = tA.x * w + tB.x * u + tC.x * v
             ty = tA.y * w + tB.y * u + tC.y * v
 
-            return self.texture.get_color_with_intensity(tx, ty, i)
+            return self.texture.get_color_with_intensity(tx, ty, -i*3)
     
     def writeZ(self, filename):
         f= open(filename, 'bw')

@@ -18,6 +18,7 @@ class Render:
         self.colorN = color(0, 0, 0) 
         self.colorD = color(250 , 250, 0)
         self.texture = None
+        self.A_shader = None
         self.arregloTringulo=[]
         self.luz=V3(0,0,-1)
         self.Model = None
@@ -287,30 +288,88 @@ class Render:
                     vt3 = V3(*obje.tvertices[ft3])
                     vt4 = V3(*obje.tvertices[ft4])
 
-                
-                    self.arregloTringulo.append(v1)
-                    self.arregloTringulo.append(v2)
-                    self.arregloTringulo.append(v3)
-                    self.arregloTringulo.append(vt1)
-                    self.arregloTringulo.append(vt2)
-                    self.arregloTringulo.append(vt3)
+                    if (self.shader != None):
+                        fn1 = i[0][2] - 1
+                        fn2 = i[1][2] - 1
+                        fn3 = i[2][2] - 1
+                        fn4 = i[3][2] - 1
 
-                    self.arregloTringulo.append(v1)
-                    self.arregloTringulo.append(v3)
-                    self.arregloTringulo.append(v4)
-                    self.arregloTringulo.append(vt1)
-                    self.arregloTringulo.append(vt3)
-                    self.arregloTringulo.append(vt4)
+                        vn1 = V3(*obje.nvertices[fn1])
+                        vn2 = V3(*obje.nvertices[fn2])
+                        vn3 = V3(*obje.nvertices[fn3])
+                        vn4 = V3(*obje.nvertices[fn4])
+
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v2)
+                        self.arregloTringulo.append(v3)
+                        self.arregloTringulo.append(vt1)
+                        self.arregloTringulo.append(vt2)
+                        self.arregloTringulo.append(vt3)
+                        self.arregloTringulo.append(vn1)
+                        self.arregloTringulo.append(vn2)
+                        self.arregloTringulo.append(vn3)
+
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v3)
+                        self.arregloTringulo.append(v4)
+                        self.arregloTringulo.append(vt1)
+                        self.arregloTringulo.append(vt3)
+                        self.arregloTringulo.append(vt4)
+                        self.arregloTringulo.append(vn1)
+                        self.arregloTringulo.append(vn3)
+                        self.arregloTringulo.append(vn4)
+
+                    else:
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v2)
+                        self.arregloTringulo.append(v3)
+                        self.arregloTringulo.append(vt1)
+                        self.arregloTringulo.append(vt2)
+                        self.arregloTringulo.append(vt3)
+
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v3)
+                        self.arregloTringulo.append(v4)
+                        self.arregloTringulo.append(vt1)
+                        self.arregloTringulo.append(vt3)
+                        self.arregloTringulo.append(vt4)
 
                 else:
-                    self.arregloTringulo.append(v1)
-                    self.arregloTringulo.append(v2)
-                    self.arregloTringulo.append(v3)
 
-                    self.arregloTringulo.append(v1)
-                    self.arregloTringulo.append(v3)
-                    self.arregloTringulo.append(v4)
-                    
+                    if (self.shader != None):
+                        fn1 = i[0][2] - 1
+                        fn2 = i[1][2] - 1
+                        fn3 = i[2][2] - 1
+                        fn4 = i[3][2] - 1
+
+                        vn1 = V3(*obje.nvertices[fn1])
+                        vn2 = V3(*obje.nvertices[fn2])
+                        vn3 = V3(*obje.nvertices[fn3])
+                        vn4 = V3(*obje.nvertices[fn4])
+
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v2)
+                        self.arregloTringulo.append(v3)
+                        self.arregloTringulo.append(vn1)
+                        self.arregloTringulo.append(vn2)
+                        self.arregloTringulo.append(vn3)
+
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v3)
+                        self.arregloTringulo.append(v4)
+                        self.arregloTringulo.append(vn1)
+                        self.arregloTringulo.append(vn3)
+                        self.arregloTringulo.append(vn4)
+
+                    else:
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v2)
+                        self.arregloTringulo.append(v3)
+
+                        self.arregloTringulo.append(v1)
+                        self.arregloTringulo.append(v3)
+                        self.arregloTringulo.append(v4)
+
 
             elif len(i) == 3:
                 f1 = i[0][0] - 1
@@ -344,6 +403,22 @@ class Render:
                     self.arregloTringulo.append(v1)
                     self.arregloTringulo.append(v2)
                     self.arregloTringulo.append(v3)
+
+                
+                if (self.shader != None):
+                        fn1 = i[0][2] - 1
+                        fn2 = i[1][2] - 1
+                        fn3 = i[2][2] - 1
+
+
+                        vn1 = V3(*obje.nvertices[fn1])
+                        vn2 = V3(*obje.nvertices[fn2])
+                        vn3 = V3(*obje.nvertices[fn3])
+                        vn4 = V3(*obje.nvertices[fn4])
+
+                        self.arregloTringulo.append(vn1)
+                        self.arregloTringulo.append(vn2)
+                        self.arregloTringulo.append(vn3)
 
         self.dibujar()
                     
@@ -398,15 +473,15 @@ class Render:
             tB = next(self.arregloTringulo)
             tC = next(self.arregloTringulo)
         
+        if (self.shader != None):
+            nA = next(self.arregloTringulo)
+            nB = next(self.arregloTringulo)
+            nC = next(self.arregloTringulo)
 
         l = self.luz
         n = (C-A) * (B-A)
         i = n.norm() @ l.norm()
 
-        if i<= 0 or i>1:
-            return
-
-        self.colorD = color(round(25*i*10), round(25*i*10), round(25*i*10))
 
         Bmin , Bmax = self.bounding_box(A,B,C)
         for x in range(round(Bmin.x), round(Bmax.x+1)):
@@ -422,16 +497,49 @@ class Render:
                 
                 if self.zbuffer[x][y] < z:
                     self.zbuffer[x][y] = z
-                    #self. sobrabuffer[x][y] = color(round(255*f), round(255*f), round(255*f))
 
-                    if self.texture:
-                        tx = tA.x * w + tB.x * u + tC.x * v
-                        ty = tA.y * w + tB.y * u + tC.y * v
+                    if (self.shader):
+                        self.colorD = self.shader( 
+                            vertices = (A,B,C),
+                            texturas = (tA, tB, tC),
+                            normales = (nA, nB, nC), 
+                            bar = (w, v, u), 
+                            luz = self.luz,
+                        )
 
-                        self.colorD = self.texture.get_color_with_intensity(tx, ty, i)
+                    else:
+                        if self.texture:
+                            tx = tA.x * w + tB.x * u + tC.x * v
+                            ty = tA.y * w + tB.y * u + tC.y * v
+
+                            self.colorD = self.texture.get_color_with_intensity(tx, ty, i)
 
                     self.point(y,x)  
- 
+    
+    def asignar(self):
+        self.A_shader = self.shader
+
+    def shader(self, **kwargs):
+
+        A, B, C = kwargs['vertices']
+        w, v, u = kwargs['bar']
+        tA, tB, tC = kwargs['texturas']
+        nA, nB, nC = kwargs['normales']
+
+        l = kwargs['luz']
+        iA = nA.norm() @ l.norm()
+        iB = nB.norm() @ l.norm()
+        iC = nC.norm() @ l.norm()
+
+        i = iA * w + iB * u + iC * v
+        
+        if self.texture:
+            
+            tx = tA.x * w + tB.x * u + tC.x * v
+            ty = tA.y * w + tB.y * u + tC.y * v
+
+            return self.texture.get_color_with_intensity(tx, ty, i)
+    
     def writeZ(self, filename):
         f= open(filename, 'bw')
 

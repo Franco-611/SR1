@@ -101,6 +101,10 @@ def glLook(eye, center, up):
     global r 
     r.lookAt(eye, center, up)
 
+def glShader():
+    global r
+    r.asignar()
+
 def glFinish(nombre):
     global r 
     r.write(nombre)

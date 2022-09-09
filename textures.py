@@ -42,7 +42,11 @@ class Textures:
         g = round(self.pixels[y][x][1] * intensity)
         r = round(self.pixels[y][x][2] * intensity)
 
-        return color(r, g, b)
+        return color(
+            max(min(r, 255), 0),
+            max(min(g, 255), 0),
+            max(min(b, 255), 0)
+        )
 
 def sobre_textura(figura, r, t):
 

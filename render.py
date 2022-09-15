@@ -414,7 +414,6 @@ class Render:
                         vn1 = V3(*obje.nvertices[fn1])
                         vn2 = V3(*obje.nvertices[fn2])
                         vn3 = V3(*obje.nvertices[fn3])
-                        vn4 = V3(*obje.nvertices[fn4])
 
                         self.arregloTringulo.append(vn1)
                         self.arregloTringulo.append(vn2)

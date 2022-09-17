@@ -196,7 +196,8 @@ class Render:
         # pixel data
         for y in range(self.height):
             for x in range(self.width):
-                f.write(self.framebuffer[y][x])
+                if y < self.height and x < self.width:
+                    f.write(self.framebuffer[y][x])
             f.write(bytes(extra_bytes[0:offset]))
 
         f.close()
@@ -259,6 +260,7 @@ class Render:
             transforVertex[1][0] / transforVertex[3][0],
             transforVertex[2][0] / transforVertex[3][0],
         )
+        print(result)
         return result
 
     def diseno3D(self, objeto, escala, traslacion, rotacion = (0, 0, 0)):
@@ -418,7 +420,6 @@ class Render:
                         self.arregloTringulo.append(vn1)
                         self.arregloTringulo.append(vn2)
                         self.arregloTringulo.append(vn3)
-
         self.dibujar()
                     
     def barycentric(self,A, B, C, P):
@@ -444,6 +445,7 @@ class Render:
         try:
             while(True):
                 self.tringulo()
+
         except:
             StopIteration
 
@@ -481,23 +483,25 @@ class Render:
         n = (C-A) * (B-A)
         i = n.norm() @ l.norm()
 
-
+        self.colorD =[round(255*-i), 0, 0]
         Bmin , Bmax = self.bounding_box(A,B,C)
+        
         for x in range(round(Bmin.x), round(Bmax.x+1)):
             for y in range(round(Bmin.y), round(Bmax.y+1)):
                 w,v,u = self.barycentric(A,B,C,V3(x,y))
-
+                print(w,v,u)
                 if (w < 0 or v < 0 or u < 0):
                     continue
-                
-                z = A.z * w + B.z * v + C.z * u
 
-                f = z/self.width
+                z = A.z * w + B.z * v + C.z * u
                 
+
                 if self.zbuffer[x][y] < z:
                     self.zbuffer[x][y] = z
+                    #print('entre')
 
                     if (self.shader):
+                        #print('entre1')
                         self.colorD = self.shader( 
                             vertices = (A,B,C),
                             texturas = (tA, tB, tC),
@@ -507,12 +511,14 @@ class Render:
                         )
 
                     else:
+                        #print('entre2')
                         if self.texture:
                             tx = tA.x * w + tB.x * u + tC.x * v
                             ty = tA.y * w + tB.y * u + tC.y * v
 
                             self.colorD = self.texture.get_color_with_intensity(tx, ty, i)
 
+                    #print(y,x)
                     self.point(y,x)  
     
     def asignar(self):
@@ -539,6 +545,10 @@ class Render:
 
             return self.texture.get_color_with_intensity(tx, ty, -i*3)
     
+    def background(self, archivo):
+        imagen = Textures(archivo)
+        self.framebuffer=imagen.pixels
+
     def writeZ(self, filename):
         f= open(filename, 'bw')
 

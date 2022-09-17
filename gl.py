@@ -82,9 +82,10 @@ def glColoreado(arr):
                 glPunto(i,j)
 
 def glObjeto3D(objeto,escala, traslacion, rotacion=(0,0,0)):
+    #print('objeto en gl')
     global r 
     r.diseno3D(objeto,escala,traslacion, rotacion)
-
+    
 def glTringulo(A,B,C):
     global r
     r.tringulo(A,B,C)
@@ -100,6 +101,10 @@ def glZbuffer(nombre):
 def glLook(eye, center, up):
     global r 
     r.lookAt(eye, center, up)
+
+def glFondo(textura):
+    global r 
+    r.background(textura)
 
 def glShader():
     global r

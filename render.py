@@ -260,7 +260,7 @@ class Render:
             transforVertex[1][0] / transforVertex[3][0],
             transforVertex[2][0] / transforVertex[3][0],
         )
-        print(result)
+        #print(result)
         return result
 
     def diseno3D(self, objeto, escala, traslacion, rotacion = (0, 0, 0)):
@@ -435,7 +435,7 @@ class Render:
         except:
             print('1',cx,'2',cy,'3',cz)
         v = cy / cz
-        w = 1 - (cx + cy)/cz
+        w = 1 - (cx + cy) / cz
         return (w, v, u)
 
     def dibujar(self):
@@ -489,19 +489,18 @@ class Render:
         for x in range(round(Bmin.x), round(Bmax.x+1)):
             for y in range(round(Bmin.y), round(Bmax.y+1)):
                 w,v,u = self.barycentric(A,B,C,V3(x,y))
-                print(w,v,u)
+                #print(w,v,u)
                 if (w < 0 or v < 0 or u < 0):
+                    #print('pase')
                     continue
 
                 z = A.z * w + B.z * v + C.z * u
                 
-
+                
                 if self.zbuffer[x][y] < z:
                     self.zbuffer[x][y] = z
-                    #print('entre')
 
                     if (self.shader):
-                        #print('entre1')
                         self.colorD = self.shader( 
                             vertices = (A,B,C),
                             texturas = (tA, tB, tC),
@@ -511,7 +510,6 @@ class Render:
                         )
 
                     else:
-                        #print('entre2')
                         if self.texture:
                             tx = tA.x * w + tB.x * u + tC.x * v
                             ty = tA.y * w + tB.y * u + tC.y * v

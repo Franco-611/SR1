@@ -205,8 +205,9 @@ class Render:
         f.close()
 
     def point(self, x, y):
-        if not (x >= self.width and x < 0 and y < 0 and y >= self.height):
-            self.framebuffer[x-1][y-1]=self.colorD
+        if x < self.width and x >= 0 and y >= 0 and y < self.height:
+            # print(self.colorD)
+            self.framebuffer[x-1][y-1]= self.colorD
 
     def line(self, v1,v2):
         x0= round(v1.x) 
@@ -291,7 +292,7 @@ class Render:
                     vt2 = V3(*obje.tvertices[ft2])
                     vt3 = V3(*obje.tvertices[ft3])
                     vt4 = V3(*obje.tvertices[ft4])
-                    
+
                     # Cambio de self.shader a self.A_shader
                     if (self.A_shader != None):
                         fn1 = i[0][2] - 1
@@ -484,8 +485,8 @@ class Render:
         l = self.luz
         n = (C-A) * (B-A)
         i = n.norm() @ l.norm()
-
-        self.colorD =[round(255*-i), 0, 0]
+        
+        #self.colorD = color(*[round(255*-i), 0, 0])
         Bmin , Bmax = self.bounding_box(A,B,C)
         for x in range(round(Bmin.x), round(Bmax.x+1)):
             for y in range(round(Bmin.y), round(Bmax.y+1)):
@@ -499,7 +500,7 @@ class Render:
                 # print(w, u , v)
                 z = A.z * w + B.z * v + C.z * u
 
-                if y < self.width and x < self.height and self.zbuffer[x][y] < z:
+                if y >= 0 and x >= 0 and y < self.height and x < self.width and self.zbuffer[x][y] < z:
                     self.zbuffer[x][y] = z
                     # Cambio de self.shader a self.A_shader
                     if (self.A_shader):
@@ -518,7 +519,6 @@ class Render:
 
                             self.colorD = self.texture.get_color_with_intensity(tx, ty, i)
 
-                    #print(y,x)
                     self.point(y,x)  
     
     def asignar(self):
@@ -584,7 +584,3 @@ class Render:
             f.write(bytes(extra_bytes[0:offset]))
 
         f.close()
-
-
-
-

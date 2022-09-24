@@ -25,6 +25,7 @@ class Render:
         self.View = None
         self.Proy = None
         self.ViewPort = None
+        self.A_shader = None
         self.clear()
 
     def loadModelMatrix(self, translate=(0,0,0), scale=(1,1,1), rotate=(0,0,0)):
@@ -49,10 +50,11 @@ class Render:
         )
 
         a = rotate.x
+        # cambie
         rotacionX = MAT([
             [1,0,0,0],
             [0,cos(a),-sin(a),0],
-            [0,sin(a),cos(a),1],
+            [0,sin(a),cos(a),0],
             [0,0,0,1]
         ]
         )
@@ -109,8 +111,8 @@ class Render:
     def loadViewport(self):
         x=self.x0
         y=self.y0
-        w= self.widthV/2
-        h= self.heightV/2
+        w= self.widthV
+        h= self.heightV
 
 
         self.ViewPort = MAT([
@@ -260,7 +262,7 @@ class Render:
             transforVertex[1][0] / transforVertex[3][0],
             transforVertex[2][0] / transforVertex[3][0],
         )
-        #print(result)
+        # print(result)
         return result
 
     def diseno3D(self, objeto, escala, traslacion, rotacion = (0, 0, 0)):
@@ -289,17 +291,18 @@ class Render:
                     vt2 = V3(*obje.tvertices[ft2])
                     vt3 = V3(*obje.tvertices[ft3])
                     vt4 = V3(*obje.tvertices[ft4])
-
-                    if (self.shader != None):
+                    
+                    # Cambio de self.shader a self.A_shader
+                    if (self.A_shader != None):
                         fn1 = i[0][2] - 1
                         fn2 = i[1][2] - 1
                         fn3 = i[2][2] - 1
                         fn4 = i[3][2] - 1
 
-                        vn1 = V3(*obje.nvertices[fn1])
-                        vn2 = V3(*obje.nvertices[fn2])
-                        vn3 = V3(*obje.nvertices[fn3])
-                        vn4 = V3(*obje.nvertices[fn4])
+                        vn1 = self.transformar(obje.nvertices[fn1])
+                        vn2 = self.transformar(obje.nvertices[fn2])
+                        vn3 = self.transformar(obje.nvertices[fn3])
+                        vn4 = self.transformar(obje.nvertices[fn4])
 
                         self.arregloTringulo.append(v1)
                         self.arregloTringulo.append(v2)
@@ -337,17 +340,17 @@ class Render:
                         self.arregloTringulo.append(vt4)
 
                 else:
-
-                    if (self.shader != None):
+                    # Cambio de self.shader a self.A_shader
+                    if (self.A_shader != None):
                         fn1 = i[0][2] - 1
                         fn2 = i[1][2] - 1
                         fn3 = i[2][2] - 1
                         fn4 = i[3][2] - 1
 
-                        vn1 = V3(*obje.nvertices[fn1])
-                        vn2 = V3(*obje.nvertices[fn2])
-                        vn3 = V3(*obje.nvertices[fn3])
-                        vn4 = V3(*obje.nvertices[fn4])
+                        vn1 = self.transformar(obje.nvertices[fn1])
+                        vn2 = self.transformar(obje.nvertices[fn2])
+                        vn3 = self.transformar(obje.nvertices[fn3])
+                        vn4 = self.transformar(obje.nvertices[fn4])
 
                         self.arregloTringulo.append(v1)
                         self.arregloTringulo.append(v2)
@@ -406,16 +409,16 @@ class Render:
                     self.arregloTringulo.append(v2)
                     self.arregloTringulo.append(v3)
 
-                
-                if (self.shader != None):
+                # Cambio de self.shader a self.A_shader
+                if (self.A_shader != None):
                         fn1 = i[0][2] - 1
                         fn2 = i[1][2] - 1
                         fn3 = i[2][2] - 1
 
 
-                        vn1 = V3(*obje.nvertices[fn1])
-                        vn2 = V3(*obje.nvertices[fn2])
-                        vn3 = V3(*obje.nvertices[fn3])
+                        vn1 = self.transformar(obje.nvertices[fn1])
+                        vn2 = self.transformar(obje.nvertices[fn2])
+                        vn3 = self.transformar(obje.nvertices[fn3])
 
                         self.arregloTringulo.append(vn1)
                         self.arregloTringulo.append(vn2)
@@ -436,10 +439,9 @@ class Render:
             print('1',cx,'2',cy,'3',cz)
         v = cy / cz
         w = 1 - (cx + cy) / cz
-        return (w, v, u)
+        return (w, u, v)
 
     def dibujar(self):
-        
         self.arregloTringulo = iter(self.arregloTringulo)
 
         try:
@@ -447,7 +449,7 @@ class Render:
                 self.tringulo()
 
         except:
-            StopIteration
+           StopIteration
 
     def cross(self,v1,v2):
         return(
@@ -474,7 +476,7 @@ class Render:
             tB = next(self.arregloTringulo)
             tC = next(self.arregloTringulo)
         
-        if (self.shader != None):
+        if (self.A_shader != None):
             nA = next(self.arregloTringulo)
             nB = next(self.arregloTringulo)
             nC = next(self.arregloTringulo)
@@ -485,22 +487,22 @@ class Render:
 
         self.colorD =[round(255*-i), 0, 0]
         Bmin , Bmax = self.bounding_box(A,B,C)
-        
         for x in range(round(Bmin.x), round(Bmax.x+1)):
             for y in range(round(Bmin.y), round(Bmax.y+1)):
-                w,v,u = self.barycentric(A,B,C,V3(x,y))
-                #print(w,v,u)
+                w,u,v = self.barycentric(A,B,C,V3(x,y))
+                
+                # print(x, y)
+                
                 if (w < 0 or v < 0 or u < 0):
                     #print('pase')
                     continue
-
+                # print(w, u , v)
                 z = A.z * w + B.z * v + C.z * u
-                
-                
-                if self.zbuffer[x][y] < z:
-                    self.zbuffer[x][y] = z
 
-                    if (self.shader):
+                if y < self.width and x < self.height and self.zbuffer[x][y] < z:
+                    self.zbuffer[x][y] = z
+                    # Cambio de self.shader a self.A_shader
+                    if (self.A_shader):
                         self.colorD = self.shader( 
                             vertices = (A,B,C),
                             texturas = (tA, tB, tC),
@@ -582,8 +584,6 @@ class Render:
             f.write(bytes(extra_bytes[0:offset]))
 
         f.close()
-
-                
 
 
 

@@ -543,7 +543,10 @@ class Render:
             tx = tA.x * w + tB.x * u + tC.x * v
             ty = tA.y * w + tB.y * u + tC.y * v
 
-            return self.texture.get_color_with_intensity(tx, ty, -i*3)
+            return self.texture.get_color_with_intensity(tx, ty, -i*6)
+
+        else:
+            return color(0, 255, 255)
     
     def background(self, archivo):
         imagen = Textures(archivo)

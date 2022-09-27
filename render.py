@@ -27,6 +27,7 @@ class Render:
         self.ViewPort = None
         self.A_shader = None
         self.clear()
+        self.colortemporal =[0,0,0]
 
     def loadModelMatrix(self, translate=(0,0,0), scale=(1,1,1), rotate=(0,0,0)):
         translate = V3(*translate)
@@ -151,6 +152,7 @@ class Render:
         self.colorN = color(r, g, b)
 
     def Color (self, r, g, b):
+        self.colortemporal = [r,g,b]
         self.colorD = color(r, g, b)
 
     def clear(self):
@@ -206,7 +208,7 @@ class Render:
 
     def point(self, x, y):
         if x < self.width and x >= 0 and y >= 0 and y < self.height:
-            # print(self.colorD)
+            #print(self.colorD)
             self.framebuffer[x-1][y-1]= self.colorD
 
     def line(self, v1,v2):
@@ -450,7 +452,7 @@ class Render:
                 self.tringulo()
 
         except:
-           StopIteration
+          StopIteration
 
     def cross(self,v1,v2):
         return(
@@ -471,7 +473,12 @@ class Render:
         A = next(self.arregloTringulo)
         B = next(self.arregloTringulo)
         C = next(self.arregloTringulo)
-
+        tA = V3(0, 0, 0)
+        tB = V3(0, 0, 0)
+        tC = V3(0, 0, 0)
+        nA = V3(0, 0, 0)
+        nB = V3(0, 0, 0)
+        nC = V3(0, 0, 0)
         if self.texture:
             tA = next(self.arregloTringulo)
             tB = next(self.arregloTringulo)
@@ -486,6 +493,10 @@ class Render:
         n = (C-A) * (B-A)
         i = n.norm() @ l.norm()
         
+        #Esto lo agrego sebas
+        if i <= 0 or i > i:
+            return
+
         #self.colorD = color(*[round(255*-i), 0, 0])
         Bmin , Bmax = self.bounding_box(A,B,C)
         for x in range(round(Bmin.x), round(Bmax.x+1)):
@@ -504,12 +515,14 @@ class Render:
                     self.zbuffer[x][y] = z
                     # Cambio de self.shader a self.A_shader
                     if (self.A_shader):
-                        self.colorD = self.shader( 
+                        self.colorD = self.A_shader(
                             vertices = (A,B,C),
                             texturas = (tA, tB, tC),
                             normales = (nA, nB, nC), 
                             bar = (w, v, u), 
                             luz = self.luz,
+                            height = y,
+                            iii = i
                         )
 
                     else:
@@ -525,11 +538,15 @@ class Render:
         self.A_shader = self.shader
 
     def shader(self, **kwargs):
-
         A, B, C = kwargs['vertices']
         w, v, u = kwargs['bar']
         tA, tB, tC = kwargs['texturas']
         nA, nB, nC = kwargs['normales']
+
+        y = kwargs['height']
+
+        ni = kwargs['iii']
+
 
         l = kwargs['luz']
         iA = nA.norm() @ l.norm()
@@ -537,20 +554,36 @@ class Render:
         iC = nC.norm() @ l.norm()
 
         i = iA * w + iB * u + iC * v
+
+        i = -i 
         
         if self.texture:
             
             tx = tA.x * w + tB.x * u + tC.x * v
             ty = tA.y * w + tB.y * u + tC.y * v
 
-            return self.texture.get_color_with_intensity(tx, ty, -i*6)
+            return self.texture.get_color_with_intensity(tx, ty, -i)
 
         else:
-            return color(0, 255, 255)
+
+            if y >= 1000:
+                return color(0, 0, round(255*ni))
+
+            else:
+                return color(0, round(255*ni), 0)
+
+            '''
+            self.colortemporal = [self.colortemporal[0]*-i,self.colortemporal[1]*-i,self.colortemporal[2]*-i]
+            #print(self.colortemporal)
+            return color(round(self.colortemporal[0]), round(self.colortemporal[1]), round(self.colortemporal[2]))
+            '''
     
     def background(self, archivo):
         imagen = Textures(archivo)
         self.framebuffer=imagen.pixels
+
+    def colorcito (self):
+        return color(*[0, 0, round(155)])
 
     def writeZ(self, filename):
         f= open(filename, 'bw')

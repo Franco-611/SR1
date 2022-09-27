@@ -518,6 +518,7 @@ class Render:
                             bar = (w, v, u), 
                             luz = self.luz,
                             height = y,
+                            width = x,
                             iii = i
                         )
 
@@ -540,18 +541,19 @@ class Render:
         nA, nB, nC = kwargs['normales']
 
         y = kwargs['height']
+        x = kwargs['width']
 
         ni = kwargs['iii']
 
 
-        l = kwargs['luz']
+        l = V3(0,0,-1)
         iA = nA.norm() @ l.norm()
         iB = nB.norm() @ l.norm()
         iC = nC.norm() @ l.norm()
 
         i = iA * w + iB * u + iC * v
 
-        i = -i 
+        i = -i * 6
         
         if self.texture:
             
@@ -566,28 +568,16 @@ class Render:
                 primer = random.randint(1, 3)
 
                 if primer == 1:
-                    return color(round(226*ni), round(221*ni), round(144*ni))
+                    return color(round(226*i), round(221*i), round(144*i))
                 elif primer == 2:
-                    return color(round(250*ni), round(239*ni), round(221*ni))
+                    return color(round(250*i), round(239*i), round(221*i))
                 elif primer == 3:
-                    return color(round(191*ni), round(186*ni), round(129*ni))
+                    return color(round(191*i), round(186*i), round(129*i))
 
             else:
-                if y <= 1100 and y >= 805:
-                    '''
-                    segundo = random.randint(1, 4)
-
-                    if segundo == 1:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
-                    elif segundo == 2:
-                        return color(round(92*ni), round(54*ni), round(43*ni))
-                    elif segundo == 3:
-                        return color(round(174*ni), round(113*ni), round(94*ni))
-                    elif segundo == 4:
-                        return color(round(92*ni), round(54*ni), round(43*ni))
-                    '''
+                if y <= 1100 and y >= 805  and x <= 1300 and x >= 900:
+                    
                     segundo = random.randint(1, 10)
-
 
                     if segundo == 1:
                         return color(round(228*ni), round(102*ni), round(57*ni))
@@ -609,7 +599,7 @@ class Render:
                         return color(round(174*ni), round(113*ni), round(94*ni))
                     elif segundo == 10:
                         return color(round(92*ni), round(54*ni), round(43*ni))
-
+                        
 
                 else:
 

@@ -19,7 +19,6 @@ class Render:
         self.colorN = color(0, 0, 0) 
         self.colorD = color(250 , 250, 0)
         self.texture = None
-        self.A_shader = None
         self.arregloTringulo=[]
         self.luz=V3(1,0.5,-1)
         self.Model = None
@@ -553,7 +552,7 @@ class Render:
 
         i = iA * w + iB * u + iC * v
 
-        i = -i * 6
+        i = -i * 7
         
         if self.texture:
             
@@ -575,57 +574,59 @@ class Render:
                     return color(round(191*i), round(186*i), round(129*i))
 
             else:
+                '''
                 if y <= 1100 and y >= 805  and x <= 1300 and x >= 900:
                     
                     segundo = random.randint(1, 10)
 
                     if segundo == 1:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
+                        return color(round(228*i), round(102*i), round(57*i))
                     elif segundo == 2:
-                        return color(round(192*ni), round(88*ni), round(57*ni))
+                        return color(round(192*i), round(88*i), round(57*i))
                     elif segundo == 3:
-                        return color(round(174*ni), round(113*ni), round(94*ni))
+                        return color(round(174*i), round(113*i), round(94*i))
                     elif segundo == 4:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
+                        return color(round(228*i), round(102*i), round(57*i))
                     elif segundo == 5:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
+                        return color(round(228*i), round(102*i), round(57*i))
                     elif segundo == 6:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
+                        return color(round(228*i), round(102*i), round(57*i))
                     if segundo == 7:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
+                        return color(round(228*i), round(102*i), round(57*i))
                     elif segundo == 8:
-                        return color(round(92*ni), round(54*ni), round(43*ni))
+                        return color(round(92*i), round(54*i), round(43*i))
                     elif segundo == 9:
-                        return color(round(174*ni), round(113*ni), round(94*ni))
+                        return color(round(174*i), round(113*i), round(94*i))
                     elif segundo == 10:
-                        return color(round(92*ni), round(54*ni), round(43*ni))
+                        return color(round(92*i), round(54*ni), round(43*i))
                         
 
                 else:
+                    '''
 
-                    segundo = random.randint(1, 10)
+                segundo = random.randint(1, 1)
 
 
-                    if segundo == 1:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
-                    elif segundo == 2:
-                        return color(round(192*ni), round(88*ni), round(57*ni))
-                    elif segundo == 3:
-                        return color(round(174*ni), round(113*ni), round(94*ni))
-                    elif segundo == 4:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
-                    elif segundo == 5:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
-                    elif segundo == 6:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
-                    if segundo == 7:
-                        return color(round(228*ni), round(102*ni), round(57*ni))
-                    elif segundo == 8:
-                        return color(round(92*ni), round(54*ni), round(43*ni))
-                    elif segundo == 9:
-                        return color(round(174*ni), round(113*ni), round(94*ni))
-                    elif segundo == 10:
-                        return color(round(92*ni), round(54*ni), round(43*ni))
+                if segundo == 1:
+                    return color(round(228*i), round(102*i), round(57*i))
+                elif segundo == 2:
+                    return color(round(192*i), round(88*i), round(57*i))
+                elif segundo == 3:
+                    return color(round(174*i), round(113*i), round(94*i))
+                elif segundo == 4:
+                    return color(round(228*i), round(102*i), round(57*i))
+                elif segundo == 5:
+                    return color(round(228*i), round(102*i), round(57*i))
+                elif segundo == 6:
+                    return color(round(228*i), round(102*i), round(57*i))
+                if segundo == 7:
+                    return color(round(228*i), round(102*i), round(57*i))
+                elif segundo == 8:
+                    return color(round(92*i), round(54*i), round(43*i))
+                elif segundo == 9:
+                    return color(round(174*i), round(113*i), round(94*i))
+                elif segundo == 10:
+                    return color(round(92*i), round(54*i), round(43*i))
     
     def background(self, archivo):
         imagen = Textures(archivo)

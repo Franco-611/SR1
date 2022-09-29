@@ -641,7 +641,25 @@ class Render:
                     return color(round(242*i), round(189*i), round(83*i))
                 elif primer == 2:
                     return color(round(232*i), round(203*i), round(147*i))
-            elif y <= 624:
+            elif y <= 624 and y >= 600:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(228*i), round(214*i), round(148*i))
+                elif primer == 2:
+                    return color(round(233*i), round(197*i), round(124*i))
+            elif y <= 599 and y >= 450:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(240*i), round(217*i), round(171*i))
+                elif primer == 2:
+                    return color(round(253*i), round(207*i), round(114*i))
+            elif y <= 449 and y >= 130:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(233*i), round(222*i), round(165*i))
+                elif primer == 2:
+                     return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 129:
                 primer = random.randint(1, 2)
                 if primer == 1:
                     return color(round(228*i), round(220*i), round(183*i))

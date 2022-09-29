@@ -563,71 +563,91 @@ class Render:
 
         else:
 
-            if y >= 1525 or y <= 575:
-                primer = random.randint(1, 3)
-
+            if y >= 1550:
+                primer = random.randint(1, 2)
                 if primer == 1:
-                    return color(round(226*i), round(221*i), round(144*i))
+                    return color(round(242*i), round(203*i), round(125*i))
                 elif primer == 2:
-                    return color(round(250*i), round(239*i), round(221*i))
-                elif primer == 3:
-                    return color(round(191*i), round(186*i), round(129*i))
-
-            else:
-                '''
-                if y <= 1100 and y >= 805  and x <= 1300 and x >= 900:
-                    
-                    segundo = random.randint(1, 10)
-
-                    if segundo == 1:
-                        return color(round(228*i), round(102*i), round(57*i))
-                    elif segundo == 2:
-                        return color(round(192*i), round(88*i), round(57*i))
-                    elif segundo == 3:
-                        return color(round(174*i), round(113*i), round(94*i))
-                    elif segundo == 4:
-                        return color(round(228*i), round(102*i), round(57*i))
-                    elif segundo == 5:
-                        return color(round(228*i), round(102*i), round(57*i))
-                    elif segundo == 6:
-                        return color(round(228*i), round(102*i), round(57*i))
-                    if segundo == 7:
-                        return color(round(228*i), round(102*i), round(57*i))
-                    elif segundo == 8:
-                        return color(round(92*i), round(54*i), round(43*i))
-                    elif segundo == 9:
-                        return color(round(174*i), round(113*i), round(94*i))
-                    elif segundo == 10:
-                        return color(round(92*i), round(54*ni), round(43*i))
+                    return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 1549 and y >= 1525:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(240*i), round(217*i), round(171*i))
+                elif primer == 2:
+                    return color(round(253*i), round(207*i), round(114*i))
+            elif y <= 1524 and y >= 1510:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(242*i), round(189*i), round(83*i))
+                elif primer == 2:
+                    return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 1509 and y >= 1450:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(228*i), round(214*i), round(148*i))
+                elif primer == 2:
+                    return color(round(233*i), round(197*i), round(124*i))
+            elif y <= 1449 and y >= 1410:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(233*i), round(222*i), round(165*i))
+                elif primer == 2:
+                     return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 1409 and y >= 1250:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(253*i), round(207*i), round(114*i))
+                elif primer == 2:
+                     return color(round(238*i), round(235*i), round(177*i))
+            elif y <= 1249 and y >= 1195:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(242*i), round(203*i), round(125*i))
+                elif primer == 2:
+                    return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 1194 and y >= 1000:
+                if y <= 1100 and y >= 1040:
+                    primer = random.randint(1, 2)
+                    if primer == 1:
+                        return color(round(228*i), round(214*i), round(148*i))
+                    elif primer == 2:
+                        return color(round(233*i), round(197*i), round(124*i))
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(242*i), round(203*i), round(125*i))
+                elif primer == 2:
+                    return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 999 and y >= 930:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(228*i), round(214*i), round(148*i))
+                elif primer == 2:
+                    return color(round(233*i), round(197*i), round(124*i))
+            elif y <= 929 and y >= 860:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(242*i), round(203*i), round(125*i))
+                elif primer == 2:
+                    return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 859 and y >= 700:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(233*i), round(222*i), round(165*i))
+                elif primer == 2:
+                     return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 699 and y >= 625:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(242*i), round(189*i), round(83*i))
+                elif primer == 2:
+                    return color(round(232*i), round(203*i), round(147*i))
+            elif y <= 624:
+                primer = random.randint(1, 2)
+                if primer == 1:
+                    return color(round(228*i), round(220*i), round(183*i))
+                elif primer == 2:
+                    return color(round(233*i), round(222*i), round(165*i))
                         
-
-                else:
-                    '''
-
-                segundo = random.randint(1, 1)
-
-
-                if segundo == 1:
-                    return color(round(228*i), round(102*i), round(57*i))
-                elif segundo == 2:
-                    return color(round(192*i), round(88*i), round(57*i))
-                elif segundo == 3:
-                    return color(round(174*i), round(113*i), round(94*i))
-                elif segundo == 4:
-                    return color(round(228*i), round(102*i), round(57*i))
-                elif segundo == 5:
-                    return color(round(228*i), round(102*i), round(57*i))
-                elif segundo == 6:
-                    return color(round(228*i), round(102*i), round(57*i))
-                if segundo == 7:
-                    return color(round(228*i), round(102*i), round(57*i))
-                elif segundo == 8:
-                    return color(round(92*i), round(54*i), round(43*i))
-                elif segundo == 9:
-                    return color(round(174*i), round(113*i), round(94*i))
-                elif segundo == 10:
-                    return color(round(92*i), round(54*i), round(43*i))
-    
     def background(self, archivo):
         imagen = Textures(archivo)
         self.framebuffer=imagen.pixels

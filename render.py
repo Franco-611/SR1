@@ -20,7 +20,7 @@ class Render:
         self.colorD = color(250 , 250, 0)
         self.texture = None
         self.arregloTringulo=[]
-        self.luz=V3(1,0.5,-1)
+        self.luz=V3(0,0,-1)
         self.Model = None
         self.View = None
         self.Proy = None
@@ -425,7 +425,7 @@ class Render:
 
                         self.arregloTringulo.append(vn1)
                         self.arregloTringulo.append(vn2)
-                        self.arregloTringulo.append(vn3)
+                        self.arregloTringulo.append(vn3)            
         self.dibujar()
                     
     def barycentric(self,A, B, C, P):
@@ -498,7 +498,7 @@ class Render:
             for y in range(round(Bmin.y), round(Bmax.y+1)):
                 w,u,v = self.barycentric(A,B,C,V3(x,y))
                 
-                # print(x, y)
+                #print(x, y)
                 
                 if (w < 0 or v < 0 or u < 0):
                     #print('pase')
@@ -545,21 +545,21 @@ class Render:
         ni = kwargs['iii']
 
 
-        l = V3(0,0,-1)
+        l = kwargs['luz']
         iA = nA.norm() @ l.norm()
         iB = nB.norm() @ l.norm()
         iC = nC.norm() @ l.norm()
 
         i = iA * w + iB * u + iC * v
 
-        i = -i * 7
+        i = -i * 4
         
         if self.texture:
             
             tx = tA.x * w + tB.x * u + tC.x * v
             ty = tA.y * w + tB.y * u + tC.y * v
 
-            return self.texture.get_color_with_intensity(tx, ty, -i)
+            return self.texture.get_color_with_intensity(tx, ty, i)
 
         else:
 

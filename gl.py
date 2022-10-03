@@ -110,6 +110,10 @@ def glShader():
     global r
     r.asignar()
 
+def glNuevo():
+    global r
+    r.nuevo()
+
 def glFinish(nombre):
     global r 
     r.write(nombre)

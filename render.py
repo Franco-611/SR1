@@ -670,6 +670,10 @@ class Render:
         imagen = Textures(archivo)
         self.framebuffer=imagen.pixels
 
+    def nuevo(self):
+        self.texture = None
+        self.arregloTringulo=[]
+
     def writeZ(self, filename):
         f= open(filename, 'bw')
 

@@ -35,10 +35,10 @@ t = Textures("barril.bmp")
 glTexture(t)
 glObjeto3D('barril.obj', (0.14, 0.14, 0.14),(-0.94, -0.75, -0.8), (0.2,0.3,0))
 
-#glNuevo()
-#t = Textures("pirata.bmp")
-#glTexture(t)
-#glObjeto3D('pirata.obj', (1.05, 1.05, 1.05),(-0.5,-0.5,0), (0,0,0))
+glNuevo()
+t = Textures("pirata.bmp")
+glTexture(t)
+glObjeto3D('francpirata2.obj', (0.09, 0.09, 0.09),(-0.2,-0.7,0), (0,-0.2,0))
 
 
 glFinish('Proy1.bmp')

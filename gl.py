@@ -94,6 +94,10 @@ def glTexture(texture):
     global r
     r.texture = texture
 
+def glMap(texture):
+    global r
+    r.map = texture
+
 def glZbuffer(nombre):
     global r 
     r.writeZ(nombre)

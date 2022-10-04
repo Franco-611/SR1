@@ -19,6 +19,7 @@ class Render:
         self.colorN = color(0, 0, 0) 
         self.colorD = color(250 , 250, 0)
         self.texture = None
+        self.map = None
         self.arregloTringulo=[]
         self.luz=V3(0,0,-1)
         self.Model = None
@@ -509,7 +510,25 @@ class Render:
                 if y >= 0 and x >= 0 and y < self.height and x < self.width and self.zbuffer[x][y] < z:
                     self.zbuffer[x][y] = z
                     # Cambio de self.shader a self.A_shader
-                    if (self.A_shader):
+                    if (self.map):
+
+                        roj = self.map.pixels[y][x][2]
+                        ver = self.map.pixels[y][x][1]
+                        azu = self.map.pixels[y][x][0]
+
+                        n  = V3(roj, ver, azu)
+
+                        i = n.norm() @ l.norm()
+
+
+                        ro = self.texture.pixels[y][x][2]
+                        ve = self.texture.pixels[y][x][1]
+                        az = self.texture.pixels[y][x][0]
+
+                        self.colorD=color(round(ro*-i),round(ve*-i),round(az*-i))
+                    
+
+                    elif (self.A_shader):
                         self.colorD = self.A_shader(
                             vertices = (A,B,C),
                             texturas = (tA, tB, tC),

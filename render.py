@@ -512,20 +512,17 @@ class Render:
                     # Cambio de self.shader a self.A_shader
                     if (self.map):
 
-                        roj = self.map.pixels[y][x][2]
-                        ver = self.map.pixels[y][x][1]
-                        azu = self.map.pixels[y][x][0]
+                        tx = tA.x * w + tB.x * u + tC.x * v
+                        ty = tA.y * w + tB.y * u + tC.y * v
 
-                        n  = V3(roj, ver, azu)
+                        normal_color = self.map.get_color_with_intensity(tx, ty, 1)
 
-                        i = n.norm() @ l.norm()
+                        n  = V3(normal_color[2], normal_color[1], normal_color[0]).norm()
 
+                        i = n @ l.norm()
+                        i *= -1
 
-                        ro = self.texture.pixels[y][x][2]
-                        ve = self.texture.pixels[y][x][1]
-                        az = self.texture.pixels[y][x][0]
-
-                        self.colorD=color(round(ro*-i),round(ve*-i),round(az*-i))
+                        self.colorD = self.texture.get_color_with_intensity(tx, ty, i)
                     
 
                     elif (self.A_shader):

@@ -33,12 +33,12 @@ glObjeto3D('ave.obj', (0.07, 0.07, 0.07),(-0.75,-0.15, -0.3), (0.3,0.8,0))
 glNuevo()
 t = Textures("barril.bmp")
 glTexture(t)
-'''
+
 m = Textures("barril2.bmp")
 glMap(m)
-'''
+
 glObjeto3D('barril.obj', (0.14, 0.14, 0.14),(-0.94, -0.75, -0.8), (0.2,0.3,0))
-#glMap(None)
+glMap(None)
 
 
 glNuevo()
